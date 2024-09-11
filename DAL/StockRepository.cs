@@ -5,7 +5,7 @@ namespace Dotnet_Assessment.DAL
 {
     public interface IStockRepository
     {
-        public Task<IEnumerable<Stock>> GetAllStocks(int? minBudget, int? maxBudget, int[] fuelTypes);
+        public Task<IEnumerable<Stock>> GetAllStocks(Filter filter);
     }
 
     public class StockRepository : IStockRepository
@@ -18,7 +18,7 @@ namespace Dotnet_Assessment.DAL
         }
 
         // Create a method that returns all stocks from the database
-        public async Task<IEnumerable<Stock>> GetAllStocks(int? minBudget, int? maxBudget, int[] fuelTypes)
+        public async Task<IEnumerable<Stock>> GetAllStocks(Filter filter)
         {
             using var connection = _databaseContext.CreateConnection();
 
@@ -40,24 +40,24 @@ namespace Dotnet_Assessment.DAL
             var parameters = new DynamicParameters();
 
             // Check if minBudget is not null
-            if (minBudget.HasValue)
+            if (filter.MinBudget.HasValue)
             {
                 stockQuery += " AND price >= @MinBudget";
-                parameters.Add("MinBudget", minBudget);
+                parameters.Add("MinBudget", filter.MinBudget);
             }
 
             // Check if maxBudget is not null
-            if (maxBudget.HasValue)
+            if (filter.MaxBudget.HasValue)
             {
                 stockQuery += " AND price <= @MaxBudget";
-                parameters.Add("MaxBudget", maxBudget);
+                parameters.Add("MaxBudget", filter.MaxBudget);
             }
 
             // Check if fuelTypes is not null
-            if (fuelTypes != null && fuelTypes.Length > 0)
+            if (filter.FuelTypes != null && filter.FuelTypes.Count > 0)
             {
                 stockQuery += " AND fuel_type IN @FuelTypes";
-                parameters.Add("FuelTypes", fuelTypes);
+                parameters.Add("FuelTypes", filter.FuelTypes);
             }
 
             IEnumerable<Stock> stocks = await connection.QueryAsync<Stock>(stockQuery, parameters);

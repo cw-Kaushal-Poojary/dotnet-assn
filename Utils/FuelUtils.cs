@@ -1,20 +1,21 @@
+using Dotnet_Assessment.Enums;
 
 namespace Dotnet_Assessment.Utils
 {
     public static class FuelIdUtils
     {
-        public static int[] GetUniqueFuelIds(string fuelIds)
+        public static List<FuelType> GetUniqueFuelIds(string? fuelIds)
         {
             if (string.IsNullOrEmpty(fuelIds))
             {
-                return Array.Empty<int>(); // Return an empty array if input is null or empty
+                return new List<FuelType>(); // Return an empty array if input is null or empty
             }
 
             return fuelIds
-                .Split(',')
-                .Select(s => int.Parse(s.Trim()))
+                .Split('+')
+                .Select(fuelId => (FuelType)int.Parse(fuelId.Trim()))
                 .Distinct()
-                .ToArray();
+                .ToList();
         }
     }
 }

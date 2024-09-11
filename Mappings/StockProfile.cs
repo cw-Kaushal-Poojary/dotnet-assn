@@ -1,5 +1,4 @@
 using AutoMapper;
-using Dotnet_Assessment.BAL;
 using Dotnet_Assessment.DTO;
 using Dotnet_Assessment.Models;
 using Dotnet_Assessment.Utils;

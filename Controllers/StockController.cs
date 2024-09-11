@@ -22,14 +22,20 @@ namespace Dotnet_Assessment.Controllers
         {
             try
             {
-                // Check if minBudget is not greater than maxBudget
-                if (minBudget.HasValue && maxBudget.HasValue && minBudget > maxBudget)
+                RequestDto requestDto = new()
                 {
-                    return BadRequest(ResponseFormatter.FormatResponse(false, 400, null, "Min budget cannot be greater than max budget"));
-                }
+                    MinBudget = minBudget,
+                    MaxBudget = maxBudget,
+                    FuelIds = fuelIds
+                };
 
-                IEnumerable<StockDto> result = await _stockService.GetStocks(minBudget, maxBudget, fuelIds);
-                return Ok(ResponseFormatter.FormatResponse(true, 200, result, "Stocks retrieved successfully"));
+                StockResultDTO result = await _stockService.GetStocks(requestDto);
+                return StatusCode(result.StatusCode, ResponseFormatter.FormatResponse(
+                    result.Status,
+                    result.StatusCode,
+                    result.Stocks,
+                    result.Message
+                ));
             }
             catch (Exception e)
             {

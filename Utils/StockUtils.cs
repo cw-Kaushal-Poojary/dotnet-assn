@@ -14,22 +14,31 @@ namespace Dotnet_Assessment.Utils
 
         public static string FormatPrice(decimal price)
         {
+            decimal value;
+            string unit;
+
             if (price >= 10000000) // 8 digits or more
             {
-                return $"{price / 10000000.0m:0.##} Crores";
+                value = price / 10000000.0m;
+                unit = (value == 1) ? "Crore" : "Crores";
             }
             else if (price >= 100000) // 6 or 7 digits
             {
-                return $"{price / 100000.0m:0.##} Lakhs";
+                value = price / 100000.0m;
+                unit = (value == 1) ? "Lakh" : "Lakhs";
             }
-            else if (price >= 10000) // 5 digits
+            else if (price >= 1000) // 5 digits
             {
-                return $"{price / 1000.0m:0.##} Thousand";
+                value = price / 1000.0m;
+                unit = (value == 1) ? "Thousand" : "Thousands";
             }
             else
             {
-                return price.ToString(); // For prices less than 5 digits, return as is
+                value = price;
+                unit = "";
             }
+
+            return $"Rs. {value} {unit}";
         }
     }
 }
