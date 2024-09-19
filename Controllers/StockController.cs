@@ -9,11 +9,11 @@ namespace Dotnet_Assessment.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
-        private readonly IStockService _stockService;
+        private readonly IStockLogic _stockLogic;
 
-        public StockController(IStockService stockService)
+        public StockController(IStockLogic stockLogic)
         {
-            _stockService = stockService;
+            _stockLogic = stockLogic;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace Dotnet_Assessment.Controllers
                     FuelIds = fuelIds
                 };
 
-                StockResultDTO result = await _stockService.GetStocks(requestDto);
+                StockResultDTO result = await _stockLogic.GetStocks(requestDto);
                 return StatusCode(result.StatusCode, ResponseFormatter.FormatResponse(
                     result.Status,
                     result.StatusCode,

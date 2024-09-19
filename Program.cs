@@ -16,7 +16,7 @@ builder.Services.AddSingleton<DatabaseContext>();
 
 // Add services and repositories to the container
 builder.Services.AddScoped<IStockRepository, StockRepository>();
-builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<IStockLogic, StockLogic>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>

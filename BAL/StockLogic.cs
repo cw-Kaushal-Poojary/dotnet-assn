@@ -7,17 +7,12 @@ using Dotnet_Assessment.Utils;
 
 namespace Dotnet_Assessment.BAL
 {
-    public interface IStockService
-    {
-        public Task<StockResultDTO> GetStocks(RequestDto requestDto);
-    }
-
-    public class StockService : IStockService
+    public class StockLogic : IStockLogic
     {
         private readonly IStockRepository _stockRepository;
         private readonly IMapper _mapper;
 
-        public StockService(IStockRepository stockRepository, IMapper mapper)
+        public StockLogic(IStockRepository stockRepository, IMapper mapper)
         {
             _stockRepository = stockRepository;
             _mapper = mapper;
