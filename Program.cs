@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(StockProfile));
 
 // Add database context
-builder.Services.AddSingleton<DatabaseContext>();
+builder.Services.AddScoped<DatabaseContext>();
 
 // Add services and repositories to the container
 builder.Services.AddScoped<IStockRepository, StockRepository>();

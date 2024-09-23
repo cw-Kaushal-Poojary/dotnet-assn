@@ -4,6 +4,6 @@ namespace Dotnet_Assessment.DAL
 {
     public interface IStockRepository
     {
-        public Task<IEnumerable<Stock>> GetAllStocks(Filter filter);
+        public Task<List<Stock>> GetAllStocks(Filter filter);
     }
 }

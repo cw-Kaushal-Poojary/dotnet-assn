@@ -13,7 +13,7 @@ namespace Dotnet_Assessment.DAL
         }
 
         // Create a method that returns all stocks from the database
-        public async Task<IEnumerable<Stock>> GetAllStocks(Filter filter)
+        public async Task<List<Stock>> GetAllStocks(Filter filter)
         {
             using var connection = _databaseContext.CreateConnection();
 
@@ -57,7 +57,7 @@ namespace Dotnet_Assessment.DAL
 
             IEnumerable<Stock> stocks = await connection.QueryAsync<Stock>(stockQuery, parameters);
 
-            return stocks;
+            return stocks.ToList();
         }
     }
 }

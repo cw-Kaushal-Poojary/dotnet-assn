@@ -57,10 +57,10 @@ namespace Dotnet_Assessment.BAL
             filter.FuelTypes = fuelIdsArray;
 
             // Call the repository to get the stocks
-            IEnumerable<Stock> allStocksResponse = await _stockRepository.GetAllStocks(filter);
+            List<Stock> allStocksResponse = await _stockRepository.GetAllStocks(filter);
 
             // Map the response to StockDto
-            IEnumerable<StockDto> allStocks = _mapper.Map<IEnumerable<Stock>, IEnumerable<StockDto>>(allStocksResponse);
+            List<StockDto> allStocks = _mapper.Map<List<Stock>, List<StockDto>>(allStocksResponse);
 
             // Check if the stocks are empty
             if (!allStocks.Any())
@@ -68,7 +68,7 @@ namespace Dotnet_Assessment.BAL
                 return new StockResultDTO
                 {
                     Status = true,
-                    StatusCode = 404,
+                    StatusCode = 204,
                     Message = "No stocks found",
                     Stocks = null
                 };
